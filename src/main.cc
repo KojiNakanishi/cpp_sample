@@ -1,35 +1,7 @@
-/*************************************************************************
- *                                                                       *
- * Open Dynamics Engine, Copyright (C) 2001,2002 Russell L. Smith.       *
- * All rights reserved.  Email: russ@q12.org   Web: www.q12.org          *
- *                                                                       *
- * This library is free software; you can redistribute it and/or         *
- * modify it under the terms of EITHER:                                  *
- *   (1) The GNU Lesser General Public License as published by the Free  *
- *       Software Foundation; either version 2.1 of the License, or (at  *
- *       your option) any later version. The text of the GNU Lesser      *
- *       General Public License is included with this library in the     *
- *       file LICENSE.TXT.                                               *
- *   (2) The BSD-style license that is included with this library in     *
- *       the file LICENSE-BSD.TXT.                                       *
- *                                                                       *
- * This library is distributed in the hope that it will be useful,       *
- * but WITHOUT ANY WARRANTY; without even the implied warranty of        *
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the files    *
- * LICENSE.TXT and LICENSE-BSD.TXT for more details.                     *
- *                                                                       *
- *************************************************************************/
-
-/*
-
-buggy with suspension.
-this also shows you how to use geom groups.
-
-*/
-
-
 #include <ode/ode.h>
 #include <drawstuff/drawstuff.h>
+#include "World.h"
+#include <memory>
 
 #define SIMULATION_DEFAULT_WIDTH  640
 #define SIMULATION_DEFAULT_HEIGHT 480
@@ -60,7 +32,7 @@ static const dVector3 yunit = { 0, 1, 0 }, zunit = { 0, 0, 1 };
 
 // dynamics and collision objects (chassis, 3 wheels, environment)
 
-static dWorldID world;
+//static dWorldID world;
 static dSpaceID space;
 static dBodyID body[4];
 static dJointID joint[3];	// joint[0] is the front wheel
@@ -194,8 +166,10 @@ static void simLoop (int pause)
   dReal sides[3] = {LENGTH,WIDTH,HEIGHT};
   dsDrawBox (dBodyGetPosition(body[0]),dBodyGetRotation(body[0]),sides);
   dsSetColor (1,1,1);
-  for (i=1; i<=3; i++) dsDrawCylinder (dBodyGetPosition(body[i]),
-				       dBodyGetRotation(body[i]),0.02f,RADIUS);
+  for (i=1; i<=3; i++) {
+    dsDrawCylinder (dBodyGetPosition(body[i]),
+		    dBodyGetRotation(body[i]),0.02f,RADIUS);
+  }
 
   dVector3 ss;
   dGeomBoxGetLengths (ground_box,ss);
@@ -219,13 +193,16 @@ int main (int argc, char **argv)
   fn.path_to_textures = DRAWSTUFF_TEXTURE_PATH;
 
   // create world
+#if 0
   dInitODE2(0);
   world = dWorldCreate();
   space = dHashSpaceCreate (0);
   contactgroup = dJointGroupCreate (0);
   dWorldSetGravity (world,0,0,-0.5);
   ground = dCreatePlane (space,0,0,1,0);
-
+#else
+  std::unique_ptr<World>  world(new World);
+#endif
   // chassis body
   body[0] = dBodyCreate (world);
   dBodySetPosition (body[0],0,0,STARTZ);
