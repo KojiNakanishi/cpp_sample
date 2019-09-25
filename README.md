@@ -1,3 +1,5 @@
+
+* ODEライブラリをビルドする。
 ```
 Dowload latest (ode-0.16.tar.gz) archive files from https://bitbucket.org/odedevs/ode/downloads/
 
@@ -8,6 +10,15 @@ cd ode-0.16
 ./bootstrap
 ./configure --enable-shared --enable-double-precision --with-drawstuff=X11
 make -j4
+```
+
+* サンプルコードをビルドする。
+```
+cd cpp_sample
+mkdir build
+cd build
+cmake ..
+make -j8
 ```
 
 ```
