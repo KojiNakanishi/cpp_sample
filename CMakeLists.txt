@@ -8,7 +8,8 @@ find_package(X11)
 link_directories(${ODE_DIR}/ode/src/.libs)
 link_directories(${ODE_DIR}/drawstuff/src/.libs)
 
-file(GLOB SRCS "src/main.cc")
+file(GLOB SRCS "src/*.cc"
+               "src/sim/*.cc")
 
 add_executable(${PROJECT_NAME} ${SRCS})
 
