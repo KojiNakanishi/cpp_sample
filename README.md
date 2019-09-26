@@ -3,9 +3,10 @@
 ```
 Dowload latest (ode-0.16.tar.gz) archive files from https://bitbucket.org/odedevs/ode/downloads/
 
+sudo apt-get install automake libtool freeglut3-dev
+
 wget https://bitbucket.org/odedevs/ode/downloads/ode-0.16.tar.gz
 tar xvfz ode-0.16.tar.gz
-sudo apt-get install automake
 cd ode-0.16
 ./bootstrap
 ./configure --enable-shared --enable-double-precision --with-drawstuff=X11
