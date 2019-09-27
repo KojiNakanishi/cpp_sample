@@ -18,6 +18,7 @@ target_include_directories(${PROJECT_NAME} PRIVATE ${ODE_DIR}/include)
 target_link_libraries(${PROJECT_NAME}
                       ode
 		      drawstuff
+		      pthread
 		      ${OPENGL_LIBRARIES}
 		      ${X11_LIBRARIES}
 		      )
