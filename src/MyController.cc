@@ -44,5 +44,10 @@ void MyController::Command(sim::ModelPtr& model, int cmd) {
 }
 
 void MyController::Loop(sim::ModelPtr& model, int pause) {
-
+  sim::Vector3f pos;
+  sim::Vector3f rpy;
+  model->GetPosition(&pos);
+  model->GetRPY(&rpy);
+  //printf("pos %f %f %f\n", pos[0], pos[1], pos[2]);
+  //printf("rpy %f %f %f\n", rpy[0], rpy[1], rpy[2]);
 }

@@ -2,6 +2,7 @@
 #include <ode/ode.h>
 #include <drawstuff/drawstuff.h>
 #include <memory>
+#include <cmath>
 
 namespace {
 
@@ -55,6 +56,20 @@ class BuggyModel : public sim::Model {
   BuggyModel()
       : _speed(0.0)
       , _steer(0.0) {
+  }
+
+  void GetPosition(sim::Vector3f *pos) const override {
+    const dReal *p = dBodyGetPosition(body[0]);
+    (*pos)[0] = p[0];
+    (*pos)[1] = p[1];
+    (*pos)[2] = p[2];
+  }
+
+  void GetRPY(sim::Vector3f *rpy) const override {
+    const dReal *r = dBodyGetRotation(body[0]);
+    (*rpy)[0] = 0.0;
+    (*rpy)[1] = 0.0;
+    (*rpy)[2] = std::atan2(r[1], r[0]);
   }
 
   void SetSpeed(float speed) override {
