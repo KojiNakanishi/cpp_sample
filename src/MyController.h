@@ -2,6 +2,8 @@
 #define _MY_CONTROLLER_H_
 
 #include "sim/Controller.h"
+#include "Context.h"
+#include <memory>
 
 class MyController : public sim::Controller {
  public:
@@ -15,6 +17,8 @@ class MyController : public sim::Controller {
  private:
   float _speed;
   float _steer;
+
+  std::unique_ptr<Context> _stateContext;
 };
 
 #endif // _MY_CONTROLLER_H_

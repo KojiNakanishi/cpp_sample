@@ -2,7 +2,8 @@
 
 MyController::MyController()
     : _speed(0.0)
-    , _steer(0.0) {
+    , _steer(0.0)
+    , _stateContext(new Context){
 }
 
 MyController::~MyController() {}
@@ -50,4 +51,5 @@ void MyController::Loop(sim::ModelPtr& model, int pause) {
   model->GetRPY(&rpy);
   //printf("pos %f %f %f\n", pos[0], pos[1], pos[2]);
   //printf("rpy %f %f %f\n", rpy[0], rpy[1], rpy[2]);
+  _stateContext->Update(0);
 }
